@@ -11,7 +11,7 @@ require "omniauth/strategies/pfas/signed_document"
 module OmniAuth
   module Strategies
     #
-    # Authenticate with Latvija.lv.
+    # Authenticate with PFAS Auth
     #
     # @example Basic Rails Usage
     #
@@ -19,9 +19,9 @@ module OmniAuth
     #
     #    Rails.application.config.middleware.use OmniAuth::Builder do
     #      provider :latvija, {
-    #        :endpoint => "https://epaktv.vraa.gov.lv/IVIS.LVP.STS/Default.aspx",
+    #        :endpoint => "https://epaktv.vraa.gov.lv/IVIS.Pfas.STS/Default.aspx",
     #        :certificate => File.read("/path/to/cert"),
-    #        :realm => "urn:federation:example.com"
+    #        :realm => "http://www.example.com"
     #      }
     #    end
     #
@@ -58,6 +58,7 @@ module OmniAuth
       end
 
       def auth_hash
+        # TODO - this hash is not the same as omniauth-latvija
         OmniAuth::Utils.deep_merge(super, {
           'uid' => "#{@response.attributes['givenname']} #{@response.attributes['surname']}, #{@response.attributes["privatepersonalidentifier"]}",
           'user_info' => {

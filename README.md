@@ -1,23 +1,12 @@
-# OmniAuth Latvija.lv
+# OmniAuth PFAS Auth
 
-> **Autentifikācijas serviss.** Ar autentifikācijas servisa palīdzību iestādes var ērti savos pakalpojumu portālos vai reģistros autentificēt pakalpojuma lietotāju atbilstoši visiem drošības standartiem. Iestādei vairs nav nepieciešams veidot jaunus autentifikācijas mehānismus un juridiski slēgt vienošanos ar katru no autentifikācijas iespējas nodrošinātājiem. Šobrīd pieejamos autentifikācijas līdzekļus var apskatīties portālā [www.latvija.lv](http://www.latvija.lv/) sadaļā „E-pakalpojumi”.
->
-> -- [VRAA E-pakalpojumi](http://www.vraa.gov.lv/lv/epakalpojumi/viss/)
-
-Provides the following authentication types:
-
-* E-paraksts
-* Swedbank
-* SEB banka
-* Online bank
-* Citadele
-* Norvik banka
-* Lattelecom Mobile ID
+This gem is based on https://github.com/ebeigarts/omniauth-latvija
+It is modified to support user attributes returned by PFAS Auth.
 
 ## Installation
 
 ```ruby
-gem 'omniauth-pfas', #:git => 'http://github.com/ebeigarts/omniauth-latvija.git'
+gem 'omniauth-pfas', :git => 'https://github.com/mariszin/omniauth-pfas.git'
 ```
 
 ## Usage
@@ -29,16 +18,14 @@ Here's a quick example, adding the middleware to a Rails app in `config/initiali
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :pfas, {
-    :endpoint => "https://epaktv.vraa.gov.lv/IVIS.LVP.STS/Default.aspx",
+    :endpoint => "https://epaktv.vraa.gov.lv/IVIS.Pfas.STS/Default.aspx",
     :certificate => File.read("/path/to/cert"),
-    :realm => "urn:federation:example.com"
+    :realm => "http://www.example.com"
   }
 end
 ```
 
 ## References
 
-* http://docs.oasis-open.org/wsfed/federation/v1.2/os/ws-federation-1.2-spec-os.html
-* http://msdn.microsoft.com/en-us/library/bb498017.aspx
-* http://msdn.microsoft.com/en-us/library/bb608217.aspx
+* https://github.com/ebeigarts/omniauth-latvija
 * https://github.com/onelogin/ruby-saml
