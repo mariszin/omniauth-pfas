@@ -27,7 +27,10 @@ module OmniAuth
 
             stmt_element.elements.each do |attr_element|
               name  = attr_element.attributes["AttributeName"]
-              value = attr_element.elements.first.text
+              value = attr_element.elements.map {|e|e.text}
+              if value.length == 1
+                value = value[0]
+              end
 
               result[name] = value
             end

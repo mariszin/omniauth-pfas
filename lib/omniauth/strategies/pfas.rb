@@ -18,7 +18,7 @@ module OmniAuth
     #  Add this to config/initializers/omniauth.rb
     #
     #    Rails.application.config.middleware.use OmniAuth::Builder do
-    #      provider :latvija, {
+    #      provider :pfas, {
     #        :endpoint => "https://epaktv.vraa.gov.lv/IVIS.Pfas.STS/Default.aspx",
     #        :certificate => File.read("/path/to/cert"),
     #        :realm => "http://www.example.com"
@@ -58,16 +58,16 @@ module OmniAuth
       end
 
       def auth_hash
-        # TODO - this hash is not the same as omniauth-latvija
         OmniAuth::Utils.deep_merge(super, {
-          'uid' => "#{@response.attributes['givenname']} #{@response.attributes['surname']}, #{@response.attributes["privatepersonalidentifier"]}",
+          'uid' => "#{@response.attributes['primarysid']}",
           'user_info' => {
-            'name' => "#{@response.attributes['givenname']} #{@response.attributes['surname']}",
-            'first_name' => @response.attributes['givenname'],
-            'last_name' => @response.attributes['surname'],
-            'private_personal_identifier' => @response.attributes['privatepersonalidentifier']
-          },
-          'extra' => @response.attributes
+            'name' => "#{@response.attributes['name']}",
+            'privatepersonalidentifier' => @response.attributes['privatepersonalidentifier'],
+            'authority' => "#{@response.attributes['AUTHORITY']}",
+            'user_authority' => "#{@response.attributes['USER_AUTHORITY']}",
+            'email' => "#{@response.attributes['emailaddress']}",
+            'roles' => @response.attributes['action']
+          }
         })
       end
     end
