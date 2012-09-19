@@ -62,9 +62,8 @@ module OmniAuth
           'uid' => "#{@response.attributes['primarysid']}",
           'user_info' => {
             'user_name' => "#{@response.attributes['name']}",
-            'privatepersonalidentifier' => @response.attributes['privatepersonalidentifier'],
-            'authority' => "#{@response.attributes['AUTHORITY']}",
-            'user_authority' => "#{@response.attributes['USER_AUTHORITY']}",
+            'privatepersonalidentifier' => "#{@response.attributes['privatepersonalidentifier']}",
+            'authority' => @response.attributes['AUTHORITY'],
             'email' => "#{@response.attributes['emailaddress']}",
             'givenname' => "#{@response.attributes['givenname']}",
             'surname' => "#{@response.attributes['surname']}",
