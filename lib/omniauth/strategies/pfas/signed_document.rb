@@ -28,11 +28,12 @@ module OmniAuth
       class SignedDocument < REXML::Document
         DSIG = "http://www.w3.org/2000/09/xmldsig#"
 
-        attr_accessor :signed_element_id
+        attr_accessor :signed_element_id, :expires_on
 
         def initialize(response)
           super(response)
           extract_signed_element_id
+          extract_expires
         end
 
         def validate!(idp_cert_fingerprint)
@@ -88,6 +89,10 @@ module OmniAuth
         def extract_signed_element_id
           reference_element       = REXML::XPath.first(self, "//ds:Signature/ds:SignedInfo/ds:Reference", { "ds" => DSIG })
           self.signed_element_id  = reference_element.attribute("URI").value unless reference_element.nil?
+        end
+
+        def extract_expires
+          self.expires_on  = REXML::XPath.first(self, "//trust:Lifetime/wsu:Expires").text.to_datetime
         end
       end
     end

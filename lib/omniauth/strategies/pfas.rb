@@ -37,7 +37,7 @@ module OmniAuth
           :wtrealm => @options[:realm],
           :wreply => callback_url,
           :wctx => callback_url,
-          :wreq => '<trust:RequestSecurityToken xmlns:trust="http://docs.oasis-open.org/ws-sx/ws-trust/200512"><trust:Claims xmlns:i="http://schemas.xmlsoap.org/ws/2005/05/identity" Dialect="http://schemas.xmlsoap.org/ws/2005/05/identity"><i:ClaimType Uri="http://docs.oasis-open.org/wsfed/authorization/200706/claims/action" Optional="false" /><i:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" Optional="false" /><i:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname" Optional="false" /></trust:Claims><trust:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</trust:RequestType></trust:RequestSecurityToken>'
+          :wreq => '<wst:RequestSecurityToken xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><wst:Claims xmlns:i="http://schemas.xmlsoap.org/ws/2005/05/identity" Dialect="http://schemas.xmlsoap.org/ws/2005/05/identity"><i:ClaimType Uri="http://docs.oasis-open.org/wsfed/authorization/200706/claims/action" Optional="false" /><i:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" Optional="false" /><i:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname" Optional="false" /></wst:Claims><wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType><wst:Renewing /></wst:RequestSecurityToken>'
         }
         query_string = params.collect{ |key, value| "#{key}=#{Rack::Utils.escape(value)}" }.join('&')
         redirect "#{options[:endpoint]}?#{query_string}"
@@ -68,7 +68,8 @@ module OmniAuth
             'givenname' => "#{@response.attributes['givenname']}",
             'surname' => "#{@response.attributes['surname']}",
             'roles' => @response.attributes['action']
-          }
+          },
+          'expires_on' => @response.expires_on
         })
       end
     end

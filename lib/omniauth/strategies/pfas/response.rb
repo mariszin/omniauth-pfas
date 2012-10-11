@@ -39,6 +39,10 @@ module OmniAuth
           end
         end
 
+        def expires_on
+          document.expires_on
+        end
+
         private
 
         def fingerprint
