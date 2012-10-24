@@ -1,5 +1,5 @@
 module OmniAuth
   module Pfas
-    VERSION = '0.0.1' unless defined?(OmniAuth::Pfas::VERSION)
+    VERSION = '1.0.0' unless defined?(OmniAuth::Pfas::VERSION)
   end
 end
