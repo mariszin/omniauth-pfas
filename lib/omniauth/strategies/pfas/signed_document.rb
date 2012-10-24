@@ -92,7 +92,7 @@ module OmniAuth
         end
 
         def extract_expires
-          self.expires_on  = REXML::XPath.first(self, "//trust:Lifetime/wsu:Expires").text.to_datetime
+          self.expires_on  = Time.parse(REXML::XPath.first(self, "//trust:Lifetime/wsu:Expires").text)
         end
       end
     end
